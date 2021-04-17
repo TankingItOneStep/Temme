@@ -1,0 +1,32 @@
+{
+    "greeting": {
+        "patterns": [
+            "Hello"
+        ],
+        "responses": [
+            "Hello"
+        ]
+    },
+    "farewell": {
+        "patterns": [
+            "Bye"
+        ],
+        "responses": [
+            "Bye"
+        ]
+    },
+    "pizza": {
+        "patterns": [
+            "hey base, order a pizza",
+            "pizza party?",
+            "where's the pizza",
+            "i want pizza",
+            "pizza time"
+        ],
+        "responses": [
+            "what kind of pizza?",
+            "order the pizza yourself ._.",
+            "sure, ordering 1000 pizzas to your address"
+        ]
+    }
+}
