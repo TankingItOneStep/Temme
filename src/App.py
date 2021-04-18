@@ -3,7 +3,7 @@ import os
 
 # Project imports
 from src.Bot import BotClient
-from src.commands import GuideCommands, UtilityCommands
+from src.commands import GuideCommands, UtilityCommands, TaterCommands
 # from src.repeating_tasks import GenshinTasks
 # from src.utils.ChatHandler import ChatHandler
 
@@ -24,6 +24,7 @@ bot = BotClient(intents=intent)
 # NlpCommands.register_all(bot)
 UtilityCommands.register_all(bot)
 GuideCommands.register_all(bot)
+TaterCommands.register_all(bot)
 
 # Register NLP chat handler
 # bot.register_chat_handler(ChatHandler(bot))

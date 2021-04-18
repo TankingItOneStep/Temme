@@ -41,9 +41,13 @@ async def move_message(bot, message):
         await sent_message.reply(content=f"Attached file `{attachment.filename}`:", file=file)
 
 
-def generate_embedded(author, raw_message, attachments):
+def generate_embedded(author, raw_message, attachments, is_dm=False):
+    title = f"Message from {author.display_name}#{author.discriminator}"
+    if is_dm:
+        title = "[DM] " + title
+
     embedded = discord.Embed(
-        title=f"Message from {author.display_name}#{author.discriminator}",
+        title=title,
         description=f"Timestamp (UTC): {TimeUtil.formatted_now(include_date=True)[:-4]}",
         color=Color.COLOR_HELP
     )
