@@ -44,12 +44,13 @@ async def move_message(bot, message):
 def generate_embedded(author, raw_message, attachments):
     embedded = discord.Embed(
         title=f"Message from {author.display_name}#{author.discriminator}",
-        description=f"Timestamp: {TimeUtil.formatted_now(include_date=True)}",
+        description=f"Timestamp (UTC): {TimeUtil.formatted_now(include_date=True)[:-4]}",
         color=Color.COLOR_HELP
     )
+    embedded.add_field(name="**Message from:**", value=f"> {author.mention}", inline=False)
     if not raw_message:
         raw_message = "*no text message*"
-    embedded.add_field(name="**Message from user:**", value=f"> {raw_message}", inline=False)
+    embedded.add_field(name="**Message details:**", value=f"> {raw_message}", inline=False)
     if attachments:
         # Add attachments field
         embedded.add_field(name="**Message attachments:**", value=f"> {Config.SEP.join(att.filename for att in attachments)}", inline=False)
