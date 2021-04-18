@@ -27,13 +27,15 @@ class DmReportCommandHandler(CommandHandler):
             return
 
         # Check cooldowns
-        if self.cooldowns.get(author.id, default=-1) > time.time():
+        if self.cooldowns.get(author.id, -1) > time.time():
             # In cooldown, send "wait" message
             await self.bot.reply(message, content=f"This command should not be spammed. You need to wait {TimeUtil.format_time(self.cooldowns[author.id] - time.time(), english=True)} before reporting again!")
             return
-
         # Not in cooldown, reset cooldown
         self.cooldowns[author.id] = time.time() + 60 * 60
+
+        # Trigger typing
+        await channel.trigger_typing()
 
         # Generate message embedded
         embedded = MoveMessageUtil.generate_embedded(message.author, message.content, message.attachments, is_dm=True)
