@@ -67,6 +67,25 @@ class PingCommandHandler(CommandHandler):
         await self.bot.reply(message, content=f"{Emoji.PING_PONG} Pong! {int(self.bot.latency * 1000)}ms")
 
 
+class TestCommandHandler(CommandHandler):
+    def __init__(self, bot):
+        super().__init__(bot, "test", [], "Placeholder command for testing uses only", "", "")
+
+    async def on_command(self, author, command, args, message, channel, guild):
+        await self.bot.reply(message, embedded=self.generate_embedded(author))
+
+    def generate_embedded(self, user):
+        embedded = discord.Embed(
+            title=f"Message from {user.mention}",
+            description=f"Timestamp: time stamp",
+            color=Color.COLOR_HELP
+        )
+        embedded.add_field(name="**Message from user:**", value=f"> raw message", inline=False)
+        # Add attachments field
+        embedded.add_field(name="**Message attachments:**", value=f"> blah.txt", inline=False)
+        return embedded
+
+
 ###############################################################
 
 def register_all(bot):
