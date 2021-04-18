@@ -36,7 +36,7 @@ MOVE_FROM_CHANNELS = {
     827241144488427560  # Almost a hero >> vent and report
 }
 # Move messages to this one channel:
-MOVE_TO_CHANNEL = 831381240958550046  # Almost a hero >> vent and report bot
+MOVE_TO_CHANNEL = 563785796050485259  # Almost a hero >> vent and report bot
 
 # vent and report = 827241144488427560
 # vent and report bot = 831381240958550046

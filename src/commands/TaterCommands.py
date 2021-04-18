@@ -1,3 +1,6 @@
+# Built-ins imports
+import time
+
 # Project imports
 from src.utils import TimeUtil, MoveMessageUtil
 from src.utils.CommandHandler import CommandHandler
@@ -7,12 +10,10 @@ from src.data import Color, Config, Emoji
 import discord
 
 
-# TODO: isinstance(channel, discord.DMChannel)
-
-
 class DmReportCommandHandler(CommandHandler):
     def __init__(self, bot):
         super().__init__(bot, "report", ["vent"], "[DM Only] Report something to the moderators in AaH Discord", f"{Config.BOT_PREFIX}report [message...]", f"{Config.BOT_PREFIX}report I ate too many strawberries!")
+        self.cooldowns = {}
 
     async def on_command(self, author, command, args, message, channel, guild):
         # DM-only command
@@ -24,6 +25,15 @@ class DmReportCommandHandler(CommandHandler):
         if len(args) == 0:
             await self.bot.reply(message, content="Invalid report arguments!", embedded=self.get_help_embedded())
             return
+
+        # Check cooldowns
+        if self.cooldowns.get(author.id, default=-1) > time.time():
+            # In cooldown, send "wait" message
+            await self.bot.reply(message, content=f"This command should not be spammed. You need to wait {TimeUtil.format_time(self.cooldowns[author.id] - time.time(), english=True)} before reporting again!")
+            return
+
+        # Not in cooldown, reset cooldown
+        self.cooldowns[author.id] = time.time() + 60 * 60
 
         # Generate message embedded
         embedded = MoveMessageUtil.generate_embedded(message.author, message.content, message.attachments, is_dm=True)
@@ -47,3 +57,11 @@ class DmReportCommandHandler(CommandHandler):
 def register_all(bot):
     """ Register all commands in this module """
     bot.register_command_handler(DmReportCommandHandler(bot))
+
+
+if __name__ == "__main__":
+    cd = {}
+    print(time.time())
+    cd[1] = time.time()
+    time.sleep(5)
+    print(time.time())
