@@ -15,10 +15,6 @@ async def move_message(bot, message):
         message (discord.Message): message to move
     """
     # Filter spam message
-    raw_message = message.content
-    if len(raw_message) <= 5:
-        await message.add_reaction(Emoji.QUESTION)
-        return
 
     # Generate message embedded
     embedded = generate_embedded(message.author, message.content, message.attachments)
